@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from "react";
 
-const ItemLine = () => {
+import {Link } from "react-router-dom";
+import {BsPencilSquare} from "react-icons/bs";
 
+const ItemLine = (props) => {
     return (
-        <tr>
-            <td>{this.props.item.itemCode}</td>
-            <td>{this.props.item.price} €</td>
-            <td>{this.props.item.status ? "Published" : "Discontinued"}</td>
-            <td>{this.props.item.createdDate}</td>
-            <td>{this.props.item.description}</td>
-        </tr>
+    <tr>
+        <td>{props.data.itemCode}</td>
+        <td>{props.data.price} €</td>
+        <td>{props.data.status ? "Published" : "Discontinued"}</td>
+        <td>{props.data.createdDate}</td>
+        <td>{props.data.description}</td>
+        <td class="d-flex justify-content-center"><Link to={`/item/${props.data.id}`}><BsPencilSquare color="black"/></Link></td>
+    </tr>
     );
 };
 

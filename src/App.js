@@ -1,31 +1,35 @@
 import React, { Component } from "react";
-import {Route, Switch ,Link } from "react-router-dom";
+import {Route, Switch, Link } from "react-router-dom";
 
 import "./App.css";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Navbar, Container, Nav } from 'react-bootstrap';
+import { Container, Navbar , Nav } from 'react-bootstrap';
 
 import ItemList from "./components/ItemList";
+import Item from "./components/Item";
 
 class App extends Component {
   render() {
     return (
       <div>
-        <Navbar bg="dark" variant="dark">
+        <Navbar bg="light" variant="light">
           <Container>
-            <Navbar.Brand href="#home">
-            <Link to={"/items"} className="nav-link">React client</Link>
+            <Navbar.Brand>
+              React client
             </Navbar.Brand>
             <Nav className="me-auto">
-              <Nav.Link > <Link to={"/items"}className="nav-link">Items</Link></Nav.Link>
+              <Link to={"/items"}className="nav-link" >Items</Link>
             </Nav>
           </Container>
         </Navbar>
-
-        <Switch>
-            <Route exact path={["/", "/items"]} component={ItemList} />
-        </Switch>
+       
+        <Container fluid className="p-4">
+          <Switch>
+              <Route exact path={["/", "/items"]} component={ItemList} />
+              <Route exact path={["/", "/item/:id"]} component={Item} />
+          </Switch>
+        </Container>
       </div>
     );
   }

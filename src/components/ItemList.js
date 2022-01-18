@@ -1,57 +1,57 @@
 import React, { useState, useEffect } from "react";
+
 import ItemDataService from "../services/ItemService";
-import { Table, Container} from 'react-bootstrap';
+import ItemLine from "../components/ItemLine";
+
+import { Table, Button, Container, Row, Col} from 'react-bootstrap';
+import {BsPlusLg} from "react-icons/bs";
 
 const ItemList = () => {
 
   const [items, setItems] = useState([]);
-  const [currentItem, setCurrentItem] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(-1);
-
-  useEffect(() => {
-    retrieveItems();
-  }, []);
 
   const retrieveItems = () => {
-    ItemDataService.getAll()
+    ItemDataService.getAllItems()
       .then(response => {
         setItems(response.data);
-        console.log(response.data);
       })
       .catch(e => {
         console.log(e);
       });
   };
 
+  useEffect(() => {
+    retrieveItems();
+  }, [items]);
+
   return (
     <div>
-        <Container fluid className="p-4">
-            <h2 className="mb-3">Item list.</h2>
-            <Table striped bordered hover size="sm">
+          <Container fluid className="mb-3">
+              <Row>
+                <Col sm={8}><h2 >Item list.</h2></Col>
+                <Col sm={4} className="d-flex justify-content-end" >
+                  <Button className="d-flex align-items-center" 
+                          variant="outline-success"><BsPlusLg  size="1rem"/> <span className="p-1">New Item</span></Button>{' '}
+                </Col>
+              </Row>
+            </Container>        
+            <Table responsive striped bordered hover variant="light">
                 <thead>
                     <tr>
-                    <th>Item code</th>
-                    <th>Price</th>
-                    <th>State</th>
-                    <th>Creation date</th>
-                    <th>Description</th>
+                      <th>Item code</th>
+                      <th>Price</th>
+                      <th>State</th>
+                      <th>Creation date</th>
+                      <th>Description</th>
+                      <th>Actions</th>
                     </tr>
                 </thead>
-
                 <tbody>
-                    {items && items.map((item, index) => (
-                        //Tiene que ser un componente.
-                        <tr>
-                            <td key={item.id} >{item.itemCode}</td>
-                            <td>{item.price} €</td>
-                            <td>{item.status ? "Published" : "Discontinued"}</td>
-                            <td>{item.createdDate}</td>
-                            <td>{item.description}</td>
-                        </tr>
+                    {items && items.map((item, index) => ( 
+                       <ItemLine key={item.id} data={item} />
                     ))}
                 </tbody>
             </Table>
-        </Container>
     </div>
   );
 };
