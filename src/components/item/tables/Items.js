@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 
-import ItemDataService from "../services/ItemService";
-import ItemLine from "../components/ItemLine";
+import ItemDataService from "../../../services/ItemService";
+import ItemLine from "./ItemLine";
 
 import { Table, Button, Container, Row, Col} from 'react-bootstrap';
 import {BsPlusLg} from "react-icons/bs";
 
-const ItemList = () => {
+const Items = () => {
 
   const [items, setItems] = useState([]);
 
@@ -47,7 +47,7 @@ const ItemList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {items && items.map((item, index) => ( 
+                    {items && items.map((item) => ( 
                        <ItemLine key={item.id} data={item} />
                     ))}
                 </tbody>
@@ -56,4 +56,4 @@ const ItemList = () => {
   );
 };
 
-export default ItemList;
+export default Items;
