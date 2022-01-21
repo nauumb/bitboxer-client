@@ -33,11 +33,11 @@ const ViewItem = (props) => {
                     <Col className="border"> <p><strong>Creation date:</strong> {formatDateFromISO8601(props.item.createdDate)}</p></Col>
                     <Col className="border">  <strong>Status:</strong><BsFillCircleFill className="m-2" color={props.item.status ? "green" : "red" } />
                             <strong className={props.item.status ? "text-success" : "text-danger" }>
-                            {props.item.status ? "Published" : "Discontinued"}
+                            {props.item.status ? "Published" : "Diºscontinued"}
                             </strong></Col>
                 </Row>
                 <Row> 
-                    <Col className="border mb-3"><p><strong>Description:</strong> {props.item.description}</p></Col> 
+                    <Col className="border border-top-0 mb-3"><p><strong>Description:</strong> {props.item.description}</p></Col> 
                 </Row>
                 
                 <Row>
