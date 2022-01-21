@@ -1,23 +1,14 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import ItemService from "../../services/ItemService";
 import { currentDateToISO8601 } from "../../helpers/helpers";
-import {
-Container,
-Row,
-Col,
-Card,
-Form,
-FormControl,
-InputGroup,
-Button
-} from "react-bootstrap";
+import { Container, Row, Col, Card, Form, FormControl, InputGroup, Button} from "react-bootstrap";
 import { BsFillCircleFill} from "react-icons/bs"
 import {toast} from 'react-toastify';
 import Toast from "../alerts/alert";
 import 'react-toastify/dist/ReactToastify.css';
-import ItemPriceReductionsTable from "./tables/ItemPriceReductions";
-import ItemSuppliersTable from "./tables/ItemSuppliers";
+import ItemPriceReductionsTable from "../price-reductions/AssociatePriceReductions";
+import ItemSuppliersTable from "../supplier/AssociateSuppliers";
 
 
 const Item = () => {
@@ -33,23 +24,21 @@ const Item = () => {
       .catch((exception) => { console.log(exception);});
   };
 
-  useEffect(() => { retrieveItem(params.id);}, [params.id]);
+  useEffect(() => { 
+    retrieveItem(params.id);
+  }, [params.id]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setItem({ ...item, [name]: value });
   };
 
-  const handleSuppliersChange = (event) => {
+  const handleSuppliersChange = (suppliers) => {
     
-    const {id, name, country} = event.target.attributes;
-    const index = item.suppliers.findIndex((item) => item.id == id.value);
+    suppliers.forEach(function(supplier) {
+      setItem({...item, suppliers: [...item.suppliers, supplier]});  
+    });
 
-    let modifiedItem = item;
-
-    index > -1 ? modifiedItem.suppliers.splice(index, 1) : modifiedItem.suppliers.push({id: id.value, name: name.value, country: country.value});
-
-    setItem(modifiedItem);
   }
 
   const handlePriceReductionsChange = (priceReduction) => {

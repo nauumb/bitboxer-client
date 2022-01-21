@@ -1,19 +1,33 @@
+import React, { useState, useEffect } from "react";
+
 import {Link} from "react-router-dom";
 
-import {BsPencilSquare} from "react-icons/bs";
+import {BsPencilSquare, BsFillEyeFill} from "react-icons/bs";
 
+
+import ViewItem from '../ViewItem';
 import  {formatDateFromISO8601} from "../../../helpers/helpers";
 
-const ItemLine = (props) => {
+const ItemLine = ({item}) => {
+
+    const [modalShowItem, setModalShowItem] = React.useState(false);
+
     return (
-    <tr>
-        <td>{props.data.itemCode}</td>
-        <td>{props.data.price} €</td>
-        <td>{props.data.status ? "Published" : "Discontinued"}</td>
-        <td>{formatDateFromISO8601(props.data.createdDate)}</td>
-        <td>{props.data.description}</td>
-        <td className="d-flex justify-content-center"><Link to={`/item/${props.data.id}`}><BsPencilSquare color="black"/></Link></td>
-    </tr>
+        <tr>
+            <td>{item.itemCode}</td>
+            <td>{item.price} €</td>
+            <td>{item.status ? "Published" : "Discontinued"}</td>
+            <td>{formatDateFromISO8601(item.createdDate)}</td>
+            <td>{item.description.substring(0,130)}...</td>
+            <td>
+                <div  className="d-flex justify-content-evenly align-items-center">
+                    <BsFillEyeFill  onClick={() => setModalShowItem(true)} color="black"/> <ViewItem item={item} show={modalShowItem} onHide={() => setModalShowItem(false)} />
+                    <Link to={`edit/item/${item.id}`}><BsPencilSquare color="black"/></Link>
+                </div>
+            </td>
+
+            
+        </tr>
     );
 };
 

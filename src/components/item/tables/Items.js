@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import {Link } from "react-router-dom";
 import ItemDataService from "../../../services/ItemService";
 import ItemLine from "./ItemLine";
 
@@ -30,8 +30,10 @@ const Items = () => {
               <Row>
                 <Col sm={8}><h2 >Item list.</h2></Col>
                 <Col sm={4} className="d-flex justify-content-end" >
-                  <Button className="d-flex align-items-center" 
-                          variant="outline-success"><BsPlusLg  size="1rem"/> <span className="p-1">New Item</span></Button>{' '}
+                  <Link className="text-decoration-none" to={"/add/item"}>
+                    <Button className="d-flex align-items-center" 
+                            variant="outline-success"><BsPlusLg  size="1rem"/> <span className="p-1">New Item</span></Button>{' '}
+                  </Link>
                 </Col>
               </Row>
             </Container>        
@@ -48,7 +50,7 @@ const Items = () => {
                 </thead>
                 <tbody>
                     {items && items.map((item) => ( 
-                       <ItemLine key={item.id} data={item} />
+                       <ItemLine key={item.id} item={item} />
                     ))}
                 </tbody>
             </Table>

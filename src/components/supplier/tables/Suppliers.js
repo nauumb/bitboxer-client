@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import SupplierService from "../../services/SupplierService";
+import SupplierService from "../../../services/SupplierService";
 
 import { Table } from 'react-bootstrap';
 

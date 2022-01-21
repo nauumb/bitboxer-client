@@ -1,9 +1,11 @@
-import { set } from "lodash";
-import React, {useState} from "react";
-import {Table, Row, Col, Modal, Form, Button, Container, InputGroup, FormControl} from 'react-bootstrap';
-import { BsPlusLg } from "react-icons/bs";
+import React, {useState} from 'react';
+import {Row, Col, Modal, Form, Button, Container, InputGroup, FormControl} from 'react-bootstrap';
+import { BsPlusLg } from 'react-icons/bs';
 
-const ItemPriceReductionsTable = ({handlePriceReductionsChange, priceReductions}) => {
+import ItemPriceReduction from './tables/ItemPriceReduction';
+
+
+const AssociatePriceReductions = ({handlePriceReductionsChange, priceReductions}) => {
 
     const [priceReduction, setPriceReduction] = useState({
         reducedPrice: 1,
@@ -20,15 +22,31 @@ const ItemPriceReductionsTable = ({handlePriceReductionsChange, priceReductions}
     const handleShow = () => setShow(true);
 
     const handleClose = () => {
-        handlePriceReductionsChange(priceReduction);
         setShow(false);
+    }
+
+    const [validated, setValidated] = useState(false);
+
+    const handleSubmit = (event) => { 
+        event.preventDefault();
+        event.stopPropagation();
+
+        const form = event.currentTarget;
+
+        setValidated(true);
+
+        if (form.checkValidity() === true) {
+
+            handlePriceReductionsChange(priceReduction);
+            setShow(false); 
+        }
     }
 
     return (
         <Container>
             <Row className="mb-4">
                 <Col className="d-flex align-items-end" sm={10}>
-                <h5>Suppliers</h5>
+                <h5>Price Reductions</h5>
                 </Col>
 
                 <Col sm={2}>
@@ -44,35 +62,19 @@ const ItemPriceReductionsTable = ({handlePriceReductionsChange, priceReductions}
 
             <Row>
                 <Col>
-                <Table responsive striped bordered hover variant="light" size="sm">
-                    <thead>
-                        <tr>
-                            <th>Reduced price</th>
-                            <th>Start date</th>
-                            <th>End date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {priceReductions && priceReductions.map((priceReduction, index) => (
-                        <tr key={index}>
-                            <td>{priceReduction.reducedPrice}</td>
-                            <td>{priceReduction.startDate}</td>
-                            <td>{priceReduction.endDate}</td>
-                        </tr>
-                        ))}
-                    </tbody>
-                </Table>
+                    <ItemPriceReduction priceReductions={priceReductions}/>
                 </Col>
             </Row>
-
+         
             <Modal size="lg" show={show} onHide={handleClose}>
+            <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
                         Associate suppliers
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form>
+     
                         <Row>
                             <Col>
                                 <Form.Group className="mb-3">
@@ -109,15 +111,16 @@ const ItemPriceReductionsTable = ({handlePriceReductionsChange, priceReductions}
                                 </Form.Group>
                             </Col>
                         </Row>
-                    </Form>
+
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="outline-success" onClick={handleClose}>Save</Button>
+                    <Button variant="outline-success" type="submit">Save</Button>
                     <Button variant="outline-danger" onClick={handleClose}>Cancel</Button>
                 </Modal.Footer>
+                </Form>
             </Modal>
         </Container>
     );
 }
 
-export default ItemPriceReductionsTable;
+export default AssociatePriceReductions;

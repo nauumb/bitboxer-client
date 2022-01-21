@@ -3,12 +3,14 @@ import {Route, Switch, Link } from "react-router-dom";
 
 import "./App.css";
 
+import Items from "./components/item/tables/Items";
+import AddItem from "./components/item/AddItem";
+import EditItem from "./components/item/EditItem";
+
+import Suppliers from './components/supplier/tables/Suppliers'
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Navbar , Nav } from 'react-bootstrap';
-
-import Items from "./components/item/tables/Items";
-import EditItem from "./components/item/EditItem";
-import Suppliers from "./components/supplier/Suppliers";
 
 class App extends Component {
   render() {
@@ -29,7 +31,8 @@ class App extends Component {
         <Container fluid className="p-4">
           <Switch>
               <Route exact path={["/", "/items"]} component={Items} />
-              <Route exact path={["/item/:id"]} component={EditItem} />
+              <Route exact path={["/edit/item/:id"]} component={EditItem} />
+              <Route exact path={["/add/item/"]} component={AddItem} />
               <Route exact path={["/suppliers"]} component={Suppliers} />
           </Switch>
         </Container>
