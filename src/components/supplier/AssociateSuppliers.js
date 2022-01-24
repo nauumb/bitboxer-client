@@ -7,7 +7,6 @@ import ItemSupplier from "./tables/ItemSupplier";
 const ItemSuppliersTable = ({handleSuppliersChange, suppliers}) => {
 
     const [allSuppliers, setAllSuppliers] = useState([]);
-    const [itemSuppliers, setItemSuppliers] = useState([]);
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -21,19 +20,12 @@ const ItemSuppliersTable = ({handleSuppliersChange, suppliers}) => {
 
     const handleChange = (event) => {
         const supplier = allSuppliers.find(element=> element.id === parseInt(event.target.id));
-        event.target.checked ? setItemSuppliers([...itemSuppliers, supplier]): setItemSuppliers(itemSuppliers.filter(x => x.id !== supplier.id));
-    }
-
-    const handleSubmit = () => {
-        handleSuppliersChange(itemSuppliers);
-        setShow(false);
+        handleSuppliersChange(supplier)
     }
 
     useEffect(() => { 
         retrieveSuppliers();
-        setItemSuppliers(suppliers);
-        
-    }, [suppliers]);
+    }, []);
 
     return (
         <Container>
@@ -54,7 +46,7 @@ const ItemSuppliersTable = ({handleSuppliersChange, suppliers}) => {
 
             <Row>
                 <Col>
-                    <ItemSupplier suppliers={itemSuppliers}></ItemSupplier>
+                    <ItemSupplier suppliers={suppliers}></ItemSupplier>
                 </Col>
             </Row>
 
@@ -75,13 +67,15 @@ const ItemSuppliersTable = ({handleSuppliersChange, suppliers}) => {
                                 label={supplier.name} 
                                 type="checkbox"
                                 onChange={handleChange}
+                                defaultChecked={suppliers && suppliers.find(element => element.id === supplier.id) &&
+                                    "checked"
+                                }
                             />
                         )}
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="outline-success" onClick={handleSubmit}>Save</Button>
-                    <Button variant="outline-danger" onClick={handleClose}>Cancel</Button>
+                    <Button variant="outline-danger" onClick={handleClose}>Close</Button>
                 </Modal.Footer>
             </Modal>
         </Container>
