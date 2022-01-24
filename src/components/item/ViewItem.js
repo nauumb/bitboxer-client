@@ -30,10 +30,10 @@ const ViewItem = (props) => {
                     <Col className="border"> <p><strong>Price:</strong> {props.item.price} €</p> </Col>
                 </Row>
                 <Row>
-                    <Col className="border"> <p><strong>Creation date:</strong> {formatDateFromISO8601(props.item.createdDate)}</p></Col>
-                    <Col className="border">  <strong>Status:</strong><BsFillCircleFill className="m-2" color={props.item.status ? "green" : "red" } />
+                    <Col className="border border-top-0"> <p><strong>Creation date:</strong> {formatDateFromISO8601(props.item.createdDate)}</p></Col>
+                    <Col className="border border-top-0">  <strong>Status:</strong><BsFillCircleFill className="m-2" color={props.item.status ? "green" : "red" } />
                             <strong className={props.item.status ? "text-success" : "text-danger" }>
-                            {props.item.status ? "Published" : "Diºscontinued"}
+                            {props.item.status ? "Published" : "Discontinued"}
                             </strong></Col>
                 </Row>
                 <Row> 
