@@ -22,7 +22,7 @@ const Items = () => {
 
   useEffect(() => {
     retrieveItems();
-  }, [items]);
+  }, []);
 
   return (
     <div>
@@ -37,6 +37,7 @@ const Items = () => {
                 </Col>
               </Row>
             </Container>        
+            
             <Table responsive striped bordered hover variant="light">
                 <thead>
                     <tr>
